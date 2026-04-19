@@ -1,0 +1,8 @@
+{
+  "name": "cypherscan",
+  "version": "0.0.1",
+  "strapi": {
+    "name": "cypherscan",
+    "type": "plugin"
+  }
+}

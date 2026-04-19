@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cypherscan_scan_results",
+  "info": {
+    "singularName": "cypherscan-scan-result",
+    "pluralName": "cypherscan-scan-results",
+    "displayName": "CypherScan Scan Result",
+    "description": "Stores CypherScan results for uploaded files"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "uploadFileId": {
+      "type": "integer"
+    },
+    "uploadDocumentId": {
+      "type": "string"
+    },
+    "fileName": {
+      "type": "string"
+    },
+    "fileUrl": {
+      "type": "string"
+    },
+    "mime": {
+      "type": "string"
+    },
+    "size": {
+      "type": "decimal"
+    },
+    "verdict": {
+      "type": "string"
+    },
+    "riskLevel": {
+      "type": "string"
+    },
+    "score": {
+      "type": "integer"
+    },
+    "traceId": {
+      "type": "string"
+    },
+    "findingsCount": {
+      "type": "integer"
+    },
+    "findingsJson": {
+      "type": "json"
+    },
+    "scannedAt": {
+      "type": "datetime"
+    },
+    "status": {
+      "type": "string"
+    },
+    "error": {
+      "type": "text"
+    }
+  }
+}
