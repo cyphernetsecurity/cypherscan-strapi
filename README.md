@@ -21,7 +21,7 @@ https://youtu.be/zRk-9Es7mwA
 
 Install the plugin:
 
-npm install @cypherscan/strapi
+npm install cypherscan-strapi
 
 Then configure your environment variables:
 
