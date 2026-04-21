@@ -1,37 +1,52 @@
 {
   "name": "@cypherscan/strapi",
   "version": "0.1.0",
-  "private": true,
-  "description": "CypherScan plugin for Strapi uploads",
+  "description": "Scan uploaded files in Strapi for malware, exposed secrets, and risks before they reach production.",
   "license": "MIT",
   "type": "commonjs",
-  "main": "dist/server/index.js",
-  "types": "dist/server/index.d.ts",
+
   "files": [
     "dist"
   ],
+
+  "exports": {
+    "./strapi-server": {
+      "source": "./server/src/index.ts",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    },
+    "./strapi-admin": {
+      "source": "./admin/src/index.ts",
+      "import": "./dist/admin/index.mjs",
+      "require": "./dist/admin/index.js",
+      "default": "./dist/admin/index.js"
+    }
+  },
+
+  "strapi": {
+    "name": "cypherscan",
+    "kind": "plugin"
+  },
+
   "scripts": {
     "build": "strapi-plugin build",
-    "watch": "strapi-plugin watch",
     "verify": "strapi-plugin verify",
-    "watch:link": "strapi-plugin watch:link"
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link",
+    "prepack": "npm run build"
   },
-  "keywords": [
-    "strapi",
-    "strapi-plugin",
-    "cypherscan",
-    "security",
-    "uploads",
-    "malware-scanning"
-  ],
+
   "peerDependencies": {
     "@strapi/strapi": "^5.42.1"
   },
+
   "devDependencies": {
-    "@strapi/sdk-plugin": "^5.0.0",
+    "@strapi/sdk-plugin": "^6.0.0",
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
   },
+
   "engines": {
     "node": ">=20.0.0 <=24.x.x"
   }

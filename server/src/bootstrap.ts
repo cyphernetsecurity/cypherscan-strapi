@@ -33,6 +33,7 @@ async function processUploadedFile(
 }
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
+  strapi.log.info("[CypherScan] PLUGIN BOOTSTRAP LOADED");
   strapi.log.info("[CypherScan] plugin bootstrap");
 
   strapi.db.lifecycles.subscribe({
