@@ -6,7 +6,7 @@ Scan uploaded files for malware, exposed secrets, and payloads that often pass b
 
 ## Example result
 
-![CypherScan demo](./public/proof.png)
+![CypherScan demo](./public/example-result.png)
 
 ## Early signals
 
