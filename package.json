@@ -1,5 +1,5 @@
 {
-  "name": "@cypherscan/strapi",
+  "name": "cypherscan-strapi",
   "version": "0.1.0",
   "description": "Scan uploaded files in Strapi for malware, exposed secrets, and risks before they reach production.",
   "license": "MIT",

@@ -1,10 +1,24 @@
 # CypherScan Strapi Plugin
 
-Scan uploaded files for malware, exposed secrets, and suspicious payloads before they reach production.
+Scan uploaded files for malware, exposed secrets, and payloads that often pass basic checks but break later in production.
+
+> Early validation from real usage, logged scans, and developer feedback.
+
+## Example result
+
+![CypherScan demo](./public/proof.png)
+
+## Early signals
+
+- 120+ downloads within the first day
+- Real scans logged outside local testing
+- Early positive feedback captured from actual usage
+- Developer feedback from Reddit and Indie Hackers
+- Built around recurring cases where files look valid on upload but break later
 
 ## What it does
 
-This plugin hooks into the Strapi upload lifecycle and automatically scans files after upload.
+Hooks into the Strapi upload lifecycle and scans files right after upload, before they are used anywhere else.
 
 It returns:
 
@@ -36,7 +50,9 @@ Upload → Scan → Verdict
 
 ## Why
 
-Most upload flows trust files by default.
+Most basic checks (size, mime-type) pass, but issues often appear later when files are actually processed.
+
+By default, upload flows trust files too early.
 
 This plugin adds a scan step directly in the upload lifecycle to ensure files are validated before being used in your system.
 
