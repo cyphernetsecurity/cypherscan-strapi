@@ -10,7 +10,7 @@ Scan uploaded files for malware, exposed secrets, and payloads that often pass b
 
 ## Example result
 
-![CypherScan demo](https://raw.githubusercontent.com/cyphernetsecurity/cypherscan-strapi/main/packages/strapi-plugin-cypherscan/public/example-result.png)
+![CypherScan demo](https://i.imgur.com/856R8YT.png)
 
 ---
 
