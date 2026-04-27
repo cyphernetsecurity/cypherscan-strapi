@@ -4,6 +4,7 @@ import {
   scanWithCypherScan,
 } from "./services/cypherscan";
 import { handleScanError, handleScanResult } from "./services/persistence";
+import { trackRemote } from "./services/tracking";
 import type { UploadFile } from "./utils/get-local-upload-path";
 
 function track(strapi: Core.Strapi, event: string, meta: Record<string, unknown>) {
@@ -40,15 +41,13 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
   strapi.log.info("[CypherScan] plugin bootstrap");
 
   track(strapi, "plugin_loaded", {});
+  trackRemote(strapi, "plugin_loaded", {});
 
   strapi.db.lifecycles.subscribe({
     models: ["plugin::upload.file"],
 
     afterCreate(event: any) {
       const file = event?.result as UploadFile;
-
-      strapi.log.info("[CypherScan] file uploaded");
-      strapi.log.info(`[CypherScan] id: ${String(file?.id ?? "n/a")}`);
 
       setTimeout(() => {
         void processUploadedFile(strapi, file).catch(async (err) => {

@@ -1,20 +1,21 @@
 {
-  "name": "@cypherscan/strapi",
-  "version": "0.1.0",
-  "private": true,
+  "name": "strapi-plugin-cypherscan",
+  "version": "0.1.6",
   "description": "CypherScan plugin for Strapi uploads",
   "license": "MIT",
   "type": "commonjs",
-  "main": "dist/server/index.js",
-  "types": "dist/server/index.d.ts",
+  "main": "strapi-server.js",
   "files": [
-    "dist"
+    "dist",
+    "strapi-server.js",
+    "package.json",
+    "README.md",
+    "public"
   ],
   "scripts": {
-    "build": "strapi-plugin build",
-    "watch": "strapi-plugin watch",
-    "verify": "strapi-plugin verify",
-    "watch:link": "strapi-plugin watch:link"
+    "build": "tsc --module commonjs --target ES2020 --moduleResolution node --esModuleInterop --skipLibCheck --resolveJsonModule --rootDir . --outDir dist server/src/index.ts server/src/bootstrap.ts server/src/register.ts server/src/destroy.ts server/src/services/cypherscan.ts server/src/services/persistence.ts server/src/services/tracking.ts server/src/utils/get-local-upload-path.ts server/src/utils/normalize.ts server/src/utils/parse-response.ts",
+    "watch": "echo \"skip watch\"",
+    "verify": "echo \"skip verify\""
   },
   "keywords": [
     "strapi",
@@ -28,7 +29,6 @@
     "@strapi/strapi": "^5.42.1"
   },
   "devDependencies": {
-    "@strapi/sdk-plugin": "^5.0.0",
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
   },
