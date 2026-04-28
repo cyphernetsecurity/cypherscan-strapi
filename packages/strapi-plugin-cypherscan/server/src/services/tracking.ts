@@ -20,7 +20,7 @@ export async function trackRemote(
         timestamp: new Date().toISOString(),
         source: "strapi_plugin",
         plugin: "strapi",
-        pluginVersion: "0.1.3",
+        pluginVersion: "0.1.8",
         ...meta,
       }),
     });

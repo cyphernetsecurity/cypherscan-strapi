@@ -1,19 +1,35 @@
 {
   "name": "strapi-plugin-cypherscan",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "CypherScan plugin for Strapi uploads",
   "license": "MIT",
-  "type": "commonjs",
-  "main": "strapi-server.js",
+  "type": "module",
+  "main": "strapi-server.cjs",
+  "exports": {
+    "./strapi-admin": {
+      "source": "./strapi-admin.ts",
+      "import": "./dist/strapi-admin.js"
+    },
+    "./strapi-server": {
+      "source": "./strapi-server.ts",
+      "import": "./dist/strapi-server.js",
+      "require": "./strapi-server.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist",
-    "strapi-server.js",
+    "admin",
+    "server",
+    "public",
+    "strapi-admin.ts",
+    "strapi-server.ts",
+    "strapi-server.cjs",
     "package.json",
-    "README.md",
-    "public"
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc --module commonjs --target ES2020 --moduleResolution node --esModuleInterop --skipLibCheck --resolveJsonModule --rootDir . --outDir dist server/src/index.ts server/src/bootstrap.ts server/src/register.ts server/src/destroy.ts server/src/services/cypherscan.ts server/src/services/persistence.ts server/src/services/tracking.ts server/src/utils/get-local-upload-path.ts server/src/utils/normalize.ts server/src/utils/parse-response.ts",
+    "build": "tsc --module ESNext --target ES2020 --moduleResolution node --esModuleInterop --skipLibCheck --resolveJsonModule --rootDir . --outDir dist strapi-admin.ts strapi-server.ts admin/src/index.ts server/src/index.ts server/src/bootstrap.ts server/src/register.ts server/src/destroy.ts server/src/services/cypherscan.ts server/src/services/persistence.ts server/src/services/tracking.ts server/src/utils/get-local-upload-path.ts server/src/utils/normalize.ts server/src/utils/parse-response.ts",
     "watch": "echo \"skip watch\"",
     "verify": "echo \"skip verify\""
   },
