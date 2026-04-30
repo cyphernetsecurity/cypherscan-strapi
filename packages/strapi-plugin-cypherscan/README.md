@@ -4,7 +4,7 @@ Scans files right after upload — before they break in production.
 
 Scan uploaded files for malware, exposed secrets, and payloads that often pass basic checks but break later in production.
 
-> Early validation from real usage, logged scans, and developer feedback.
+Early validation from real usage, logged scans, and developer feedback.
 
 ---
 
@@ -17,6 +17,56 @@ Scan uploaded files for malware, exposed secrets, and payloads that often pass b
 ## What it does
 
 Hooks into the Strapi upload lifecycle and scans files immediately after upload, before they are used anywhere else.
+
+---
+
+## How it works (technical overview)
+
+Strapi accepts file uploads by default.
+
+These files can contain malware, exposed secrets, or unsafe payloads that only become problematic when they are actually used.
+
+Most systems validate file format — not behavior.
+
+This plugin adds a scanning layer directly into the upload lifecycle.
+
+---
+
+### Where it hooks
+
+The plugin hooks into the Strapi upload lifecycle (afterCreate).
+
+At this point:
+- the file has been uploaded
+- it exists locally in /public/uploads
+- it has not been used yet by the application
+
+---
+
+### Flow
+
+1. File is uploaded via Strapi  
+2. Strapi stores the file locally  
+3. Plugin triggers on afterCreate  
+4. File is sent to CypherScan API  
+5. API returns:
+   - verdict (clean / suspicious / malicious)
+   - findings (API keys, tokens, etc)
+   - traceId
+
+---
+
+### Example
+
+const res = await fetch("https://cyphernetsecurity.com/api/v1/scan", {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${process.env.CYPHERSCAN_API_KEY}`,
+  },
+  body: formData,
+});
+
+This request sends the uploaded file to the scanning API and returns a structured security verdict.
 
 ---
 
@@ -66,9 +116,9 @@ But real issues often appear later when files are actually processed.
 
 This plugin moves validation earlier:
 
-before the file is trusted  
-before it's used  
-before it reaches production  
+- before the file is trusted  
+- before it's used  
+- before it reaches production  
 
 ---
 
