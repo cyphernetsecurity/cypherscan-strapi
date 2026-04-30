@@ -2,7 +2,7 @@
 
 Scans files right after upload — before they break in production.
 
-Scan uploaded files for malware, exposed secrets, and payloads that often pass basic checks but break later in production.
+Scan uploaded files for malware, exposed secrets, and payloads that often pass basic checks but fail later in production.
 
 Early validation from real usage, logged scans, and developer feedback.
 
@@ -34,11 +34,11 @@ This plugin adds a scanning layer directly into the upload lifecycle.
 
 ### Where it hooks
 
-The plugin hooks into the Strapi upload lifecycle (afterCreate).
+The plugin hooks into the Strapi upload lifecycle (`afterCreate`).
 
 At this point:
 - the file has been uploaded
-- it exists locally in /public/uploads
+- it exists locally in `/public/uploads`
 - it has not been used yet by the application
 
 ---
@@ -47,17 +47,21 @@ At this point:
 
 1. File is uploaded via Strapi  
 2. Strapi stores the file locally  
-3. Plugin triggers on afterCreate  
+3. Plugin triggers on `afterCreate`  
 4. File is sent to CypherScan API  
 5. API returns:
    - verdict (clean / suspicious / malicious)
-   - findings (API keys, tokens, etc)
+   - risk level
+   - score
    - traceId
+   - findings (e.g. API keys, tokens)
+   - summary
 
 ---
 
 ### Example
 
+```ts
 const res = await fetch("https://cyphernetsecurity.com/api/v1/scan", {
   method: "POST",
   headers: {
@@ -65,6 +69,7 @@ const res = await fetch("https://cyphernetsecurity.com/api/v1/scan", {
   },
   body: formData,
 });
+```
 
 This request sends the uploaded file to the scanning API and returns a structured security verdict.
 
@@ -72,11 +77,13 @@ This request sends the uploaded file to the scanning API and returns a structure
 
 ## It returns
 
+A structured security result:
+
 - verdict (clean / suspicious / malicious)
 - risk level
 - score
 - traceId
-- findings
+- findings (e.g. API keys, tokens)
 - summary
 
 ---
@@ -91,20 +98,18 @@ https://youtu.be/zRk-9Es7mwA
 
 Install the plugin:
 
+```bash
 npm install strapi-plugin-cypherscan
+```
 
 Then configure your environment variables:
 
-CYPHERSCAN_API_KEY=cs_xxxxx  
-CYPHERSCAN_BASE_URL=https://cyphernetsecurity.com  
+```
+CYPHERSCAN_API_KEY=cs_xxxxx
+CYPHERSCAN_BASE_URL=https://cyphernetsecurity.com
+```
 
 Restart your Strapi app.
-
----
-
-## Flow
-
-Upload → Scan → Verdict
 
 ---
 
