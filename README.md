@@ -49,13 +49,7 @@ At this point:
 2. Strapi stores the file locally  
 3. Plugin triggers on `afterCreate`  
 4. File is sent to CypherScan API  
-5. API returns:
-   - verdict (clean / suspicious / malicious)
-   - risk level
-   - score
-   - traceId
-   - findings (e.g. API keys, tokens)
-   - summary
+5. API returns a structured security result  
 
 ---
 
