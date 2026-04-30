@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-cypherscan",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "CypherScan plugin for Strapi uploads",
   "license": "MIT",
   "type": "module",
