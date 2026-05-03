@@ -8,6 +8,13 @@ Scan uploaded files before they hit production.
 
 ---
 
+👉 Scan your own file  
+https://cyphernetsecurity.com/scan  
+
+No signup required — 2 free scans
+
+---
+
 ## Example
 
 ![CypherScan demo](https://i.imgur.com/856R8YT.png)
