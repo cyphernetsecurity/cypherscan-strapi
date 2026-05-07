@@ -1,14 +1,28 @@
 # CypherScan Strapi Plugin
 
-Scans files right after upload — before they break in production.
+Scans uploaded files immediately after upload — before they are trusted by downstream systems.
 
-Scan uploaded files for malware, exposed secrets, and payloads that often pass basic checks but fail later in production.
+The plugin helps detect:
 
-Early validation from real usage, logged scans, and developer feedback.
+* malware
+* exposed secrets
+* leaked API keys
+* suspicious payloads
+* unsafe embedded content
+
+before files continue through production workflows.
 
 ---
 
-## Example result
+## Marketplace
+
+Available on the official Strapi Marketplace:
+
+https://market.strapi.io/plugins/strapi-plugin-cypherscan
+
+---
+
+## Example Result
 
 ![CypherScan demo](https://i.imgur.com/856R8YT.png)
 
@@ -16,44 +30,59 @@ Early validation from real usage, logged scans, and developer feedback.
 
 ## What it does
 
-Hooks into the Strapi upload lifecycle and scans files immediately after upload, before they are used anywhere else.
+The plugin hooks into the Strapi upload lifecycle and scans files immediately after upload.
+
+Instead of relying only on:
+
+* mime-type validation
+* file extensions
+* upload size limits
+
+it adds a deeper analysis layer before files are processed elsewhere in the application.
 
 ---
 
-## How it works (technical overview)
+## Why this matters
 
-Strapi accepts file uploads by default.
+Many systems validate upload structure — not operational risk.
 
-These files can contain malware, exposed secrets, or unsafe payloads that only become problematic when they are actually used.
+Unsafe files can still:
 
-Most systems validate file format — not behavior.
+* move through backend workflows
+* reach storage systems
+* enter moderation pipelines
+* trigger downstream processing
+* expose secrets or embedded payloads
 
-This plugin adds a scanning layer directly into the upload lifecycle.
+CypherScan shifts part of this validation earlier in the pipeline.
 
 ---
 
-### Where it hooks
+## Upload Flow
+
+1. File is uploaded through Strapi
+2. Strapi stores the file locally
+3. Plugin hooks into `afterCreate`
+4. File is sent to the CypherScan API
+5. API returns a structured security analysis
+
+---
+
+## Where it hooks
 
 The plugin hooks into the Strapi upload lifecycle (`afterCreate`).
 
-At this point:
-- the file has been uploaded
-- it exists locally in `/public/uploads`
-- it has not been used yet by the application
+At this stage:
+
+* the upload already exists locally
+* the file is accessible in `/public/uploads`
+* downstream systems have not processed it yet
+
+This creates an opportunity to analyze the file before it is trusted further in the workflow.
 
 ---
 
-### Flow
-
-1. File is uploaded via Strapi  
-2. Strapi stores the file locally  
-3. Plugin triggers on `afterCreate`  
-4. File is sent to CypherScan API  
-5. API returns a structured security result  
-
----
-
-### Example
+## Example API Call
 
 ```ts
 const res = await fetch("https://cyphernetsecurity.com/api/v1/scan", {
@@ -65,26 +94,22 @@ const res = await fetch("https://cyphernetsecurity.com/api/v1/scan", {
 });
 ```
 
-This request sends the uploaded file to the scanning API and returns a structured security verdict.
+The API returns a structured security verdict for the uploaded file.
 
 ---
 
-## It returns
+## Returned Security Data
 
-A structured security result:
+Structured results can include:
 
-- verdict (clean / suspicious / malicious)
-- risk level
-- score
-- traceId
-- findings (e.g. API keys, tokens)
-- summary
-
----
-
-## Demo
-
-https://youtu.be/zRk-9Es7mwA
+* verdict (`clean`, `suspicious`, `malicious`)
+* risk level
+* score
+* traceId
+* findings
+* exposed secret detection
+* malware indicators
+* summary
 
 ---
 
@@ -96,31 +121,43 @@ Install the plugin:
 npm install strapi-plugin-cypherscan
 ```
 
-Then configure your environment variables:
+---
 
-```
+## Environment Variables
+
+```env
 CYPHERSCAN_API_KEY=cs_xxxxx
 CYPHERSCAN_BASE_URL=https://cyphernetsecurity.com
 ```
 
-Restart your Strapi app.
+Restart your Strapi application after configuration.
 
 ---
 
-## Why
+## Quick Start
 
-Most upload flows rely on basic validation (size, mime-type).
+1. Install plugin
+2. Configure API key
+3. Upload a file through Strapi
+4. View structured scan results
 
-But real issues often appear later when files are actually processed.
+---
 
-This plugin moves validation earlier:
+## Demo
 
-- before the file is trusted  
-- before it's used  
-- before it reaches production  
+https://youtu.be/zRk-9Es7mwA
+
+---
+
+## API Documentation
+
+https://cyphernetsecurity.com/docs/api
 
 ---
 
 ## Status
 
-Validated in a real Strapi app. Marketplace submission in progress.
+* Live API
+* Public marketplace distribution
+* Production-tested integration flow
+* Active onboarding and ecosystem distribution
