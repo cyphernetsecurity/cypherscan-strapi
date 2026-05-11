@@ -1,3 +1,3 @@
 "use strict";
 
-module.exports = require("./dist/server/src");
+module.exports = require("./strapi-server.cjs");

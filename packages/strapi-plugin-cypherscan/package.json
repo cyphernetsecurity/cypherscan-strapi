@@ -1,9 +1,9 @@
 {
   "name": "strapi-plugin-cypherscan",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "CypherScan plugin for Strapi uploads",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "main": "strapi-server.cjs",
   "exports": {
     "./strapi-admin": {
@@ -29,9 +29,11 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc --module ESNext --target ES2020 --moduleResolution node --esModuleInterop --skipLibCheck --resolveJsonModule --rootDir . --outDir dist strapi-admin.ts strapi-server.ts admin/src/index.ts server/src/index.ts server/src/bootstrap.ts server/src/register.ts server/src/destroy.ts server/src/services/cypherscan.ts server/src/services/persistence.ts server/src/services/tracking.ts server/src/utils/get-local-upload-path.ts server/src/utils/normalize.ts server/src/utils/parse-response.ts",
+    "build": "npm run build:server && npm run build:admin",
     "watch": "echo \"skip watch\"",
-    "verify": "echo \"skip verify\""
+    "verify": "echo \"skip verify\"",
+    "build:server": "tsc --module CommonJS --target ES2020 --moduleResolution node --esModuleInterop --skipLibCheck --resolveJsonModule --rootDir . --outDir dist strapi-server.ts server/src/index.ts server/src/bootstrap.ts server/src/register.ts server/src/destroy.ts server/src/services/cypherscan.ts server/src/services/persistence.ts server/src/services/tracking.ts server/src/utils/get-local-upload-path.ts server/src/utils/normalize.ts server/src/utils/parse-response.ts",
+    "build:admin": "tsc --module ESNext --target ES2020 --moduleResolution node --esModuleInterop --skipLibCheck --resolveJsonModule --rootDir . --outDir dist strapi-admin.ts admin/src/index.ts"
   },
   "keywords": [
     "strapi",
@@ -45,6 +47,9 @@
     "@strapi/strapi": "^5.42.1"
   },
   "devDependencies": {
+    "@strapi/design-system": "^2.2.0",
+    "@strapi/icons": "^2.2.0",
+    "@strapi/strapi": "^5.42.1",
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
   },
